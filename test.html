@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title>在线支付 - android支付宝 - 网上支付 安全快速！</title>
+    <meta name="referrer" content="no-referrer">
+    <script type="text/javascript" src="http://static.runoob.com/assets/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="__CDN__/css/alipay//layer.js"></script>
+
+</head>
+<body>
+<div style="width: 100%; text-align: center;font-family:微软雅黑;">
+    <div id="panelWrap" class="panel-wrap">
+
+
+        <button class="layui-btn layui-btn-normal" onclick='pay()'>重新支付</button>
+        <div>请使用余额或储蓄卡进行支付</div>
+    </div>
+</div>
+
+<!--<h1>点击下面按钮唤起支付渠道选择</h1>-->
+<!--<a href="javascript:void(0)" class="btn tradestr" onclick="pay2()">支付渠道</a>-->
+<script>
+    function ready(callback) {
+        // 如果jsbridge已经注入则直接调用
+        if (window.AlipayJSBridge) {
+            callback && callback();
+        } else {
+            // 如果没有注入则监听注入的事件
+            document.addEventListener('AlipayJSBridgeReady', callback, false);
+        }
+    }
+function pay2() {
+
+    // AlipayJSBridge.call('tradePay', {
+    //     "", "", "", "", displayPayResult, bizContext, orderStr
+    // }, fn);
+    //
+
+    // AlipayJSBridge.call('getUserInfo', function(info){
+    //     var userId= info.userId;
+    //     alert(JSON.stringify(info));
+        AlipayJSBridge.call("tradePay", {
+            tradeNO: '{$tradeNo}',
+            bizContext: [
+                // extern_token登入sessionId
+                "extern_token=\"GZ00cSiae3xXJ9sXjuV2NhnyfWOOPb98mobilegwGZ00\"",
+                // user_id登入账号ID
+                "&user_id="+"\"{$aliuser}\"",
+                "&biz_type=\"switch_channel\"",
+                "&biz_identity=\"userassets10002\"",
+                "&trade_from=\"3008\"",
+                "&forbid_channel=\"credit\"",
+                "&assigned_channel=\"xxx\"",
+                "app_name=\"alipay\""
+            ].join('')
+        }, function(result) {
+            alert(JSON.stringify(result));
+          //  pay(result.result);
+            $.post("/mobao/api/pay/returns", {
+                'queueId':385090,
+                'orderStr': 'wu',
+                'resultCode': result.resultCode,
+                'memo': result.memo,
+                result: result.result,
+                extra: JSON.stringify(result)
+            }, function (result) {
+
+            });
+        });
+
+
+}
+</script>
+<script>
+    AlipayJSBridge.call('setTitle', {
+        title: 'mi支付',
+        subtitle: '安全支付'
+    });
+
+    AlipayJSBridge.call('showLoading', {
+        text: '支付加载中',
+    });
+
+    setTimeout(function () {
+        AlipayJSBridge.call('hideLoading');
+    }, 300);
+
+    AlipayJSBridge.call('hideOptionMenu');
+    pay();
+
+    function pay(result) {
+
+
+        AlipayJSBridge["call"]("tradePay",
+            {'tradeNO': '{$tradeNo}',
+                'bizType': 'trade',
+                'bizSubType':'消费',
+                'bizContext': result,
+                'displayPayResult': true,
+            },
+            function (r) {
+                $.post("/mobao/api/pay/returns", {
+                    'queueId': {$queueId},
+                    'orderStr': 'wu',
+                    'resultCode': r.resultCode,
+                    'memo': r.memo,
+                    result: r.result,
+                    extra: JSON.stringify(r)
+                }, function (result) {
+
+                });
+
+
+                if (r.resultCode == 9000) {
+
+                    AlipayJSBridge.call('confirm', {
+                        title: '亲',
+                        message: '支付成功',
+                        button: '确定'
+                    }, function (e) {
+
+                        AlipayJSBridge.call('exitApp');
+                    });
+
+
+                } else {
+                    AlipayJSBridge.call('toast', {
+                        content: '支付失败,请点击重新支付按钮进行支付，或重新下单进行支付',
+                        type: 'fail',
+                        duration: 2000
+                    }, function () {
+
+                    });
+
+                }
+
+            });
+    }
+
+
+</script>
+<!-- 百度统计 开始 -->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "http://hm.baidu.com/hm.js?c7d93e102c7858ecd3f7d1cd3cb5ee73";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
