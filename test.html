@@ -1,13 +1,5 @@
-<script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.inc.min.js"></script>
-
-<button id="J_btn" class="btn btn-default">支付</button>
-<script>
-  var btn = document.querySelector('#J_btn');
-  btn.addEventListener('click', function(){
-    ap.tradePay({
-      orderStr: 'service=\"alipay.fund.stdtrustee.order.create.pay\"&partner=\"2088401309894080\"&_input_charset=\"utf-8\"&notify_url=\"https:\/\/wwhongbao.taobao.com\/callback\/alipay\/notifyPaySuccess.do\"&out_order_no=\"12621186_350_1581128178_75f04b83a91fd53617c4190a53525084_1\"&out_request_no=\"12621186_350_1581128178_75f04b83a91fd53617c4190a53525084_1_p\"&product_code=\"SOCIAL_RED_PACKETS\"&scene_code=\"MERCHANT_COUPON\"&amount=\"1.00\"&pay_strategy=\"CASHIER_PAYMENT\"&receipt_strategy=\"INNER_ACCOUNT_RECEIPTS\"&platform=\"DEFAULT\"&channel=\"APP\"&order_title=\"淘宝现金红包\"&master_order_no=\"2020020810002001420509302228\"&order_type=\"DEDUCT_ORDER\"&extra_param=\"{\"payeeShowName\":\"淘宝现金红包\"}\"&pay_timeout=\"30m\"&order_expired_time=\"360d\"&sign=\"Yq0DowIa8Mu7LjM0bc9GzZC6rh9YgVaERxRGXYiEhzfs1TFzWjEFAauwwgJdoAcgqUrcZBndyvmZphuAK8vcCyGp5fC%2FP2Lth1w6TbgL98LZjmRjbIVxixyE1H%2FnNytdo53JAO5gFBGc9FS4Z9Gn%2Bbfr%2Bj70rlLWkVTfdtglt7eZU%2Bjd1h8cz%2BfcSlAI%2BFZ0uMcFwSWScf1hZJ9lXUPRg6sy9ETFAFIQ4e2NuUGpDdRLJPZnFdJOGSvSf7Uz8%2B7P5E3u2qvXqw%2FAYJoLoJOSNZCt%2FNUtV0ITmBx%2BkP31NswsXdplrGJMb133ld42jqjNLuuhVUxBLot5PK28h5rmfg%3D%3D\"&sign_type=\"RSA\"'
-    }, function(res){
-      ap.alert(res.resultCode);
-    });
-  });
-</script>
+<form name="punchout_form" method="post" action="https://openapi.alipay.com/gateway.do?charset=UTF-8&method=alipay.trade.wap.pay&sign=bz2waw18pJ60zdJ6opcgZsZomXpeHcNTOT4v5j1LU17q14yXdz6WKoTaP7kox2eAMywZF%2Fp8LdFVQ%2FC1PxefhMPock1xWcEDzB%2BMGbh4jeQcelMPCGpu7kOllXhA8nNgxJJdbNog08pwMNepwA068dd6UcGmCIBq2nQgpzDxb6aRFzcHwJp0TrtXX%2FMszf4hFU23Yq7%2BVEEbhTvlD%2FV0TSgl%2Fm9rswvvr2hb3VXz4Mbqhyu1F0FhK6wGkFVLD1X%2BABpodkCLiKQPMvY3wqoW5APnr%2FscxjWiinefIHO2KVJIpHZ9u40GMeO8025uzupgw4YzJuubP7B%2B1QBeD%2ByS6Q%3D%3D&return_url=http%3A%2F%2Fdomain.com%2FCallBack%2Freturn_url.jsp&notify_url=http%3A%2F%2Fv2.wowotou01.com%2Falipaynotify&version=1.0&app_id=2018061360410257&sign_type=RSA2&timestamp=2020-02-19+21%3A16%3A02&alipay_sdk=alipay-sdk-java-dynamicVersionNo&format=json">
+<input type="hidden" name="biz_content" value="{ &quot;out_trade_no&quot;:&quot;1582118162180&quot;, &quot;total_amount&quot;:&quot;1&quot;, &quot;subject&quot;:&quot;测试&quot;, &quot;product_code&quot;:&quot;QUICK_WAP_PAY&quot; }">
+<input type="submit" value="立即支付" style="display:none" >
+</form>
+<script>document.forms[0].submit();</script>
