@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>族谱管理系统</title>
+    <link rel="stylesheet" href="family-tree.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 头部 -->
+        <header class="app-header">
+            <h1>🌳 族谱管理系统</h1>
+            <div class="header-actions" >
+                <button id="addMemberBtn" class="btn btn-primary" style="display: none;">
+                    <span>➕</span> 添加成员
+                </button>
+                <button id="exportBtn" class="btn btn-secondary">
+                    <span>📥</span> 导出数据
+                </button>
+                <button id="importBtn" class="btn btn-secondary" style="display: none;">
+                    <span>📤</span> 导入数据
+                </button>
+            </div>
+        </header>
+
+        <!-- 工具栏 -->
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索成员姓名...">
+                <button id="searchBtn" class="btn-icon">🔍</button>
+            </div>
+            <div class="filter-box">
+                <select id="filterGeneration">
+                    <option value="">所有世代</option>
+                </select>
+                <select id="filterGender">
+                    <option value="">所有性别</option>
+                    <option value="male">男</option>
+                    <option value="female">女</option>
+                </select>
+            </div>
+            <button id="expandAllBtn" class="btn btn-small">展开全部</button>
+            <button id="collapseAllBtn" class="btn btn-small">收起全部</button>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 侧边栏 - 成员列表 -->
+            <aside class="sidebar">
+                <h3>成员列表</h3>
+                <div id="memberList" class="member-list">
+                    <!-- 成员列表将在这里动态生成 -->
+                </div>
+            </aside>
+
+            <!-- 主视图 - 家族树 -->
+            <main class="tree-view">
+                <div id="treeContainer" class="tree-container">
+                    <div id="treeCanvas" class="tree-canvas">
+                        <!-- 家族树将在这里渲染 -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 添加/编辑成员弹窗 -->
+    <div id="memberModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">添加家族成员</h2>
+                <button class="modal-close" id="closeModal">×</button>
+            </div>
+            <form id="memberForm" class="member-form">
+                <input type="hidden" id="memberId">
+                
+                <div class="form-group">
+                    <label for="memberName">姓名 *</label>
+                    <input type="text" id="memberName" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="memberGender">性别 *</label>
+                        <select id="memberGender" required>
+                            <option value="">请选择</option>
+                            <option value="male">男</option>
+                            <option value="female">女</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="memberBirthDate">出生日期</label>
+                        <input type="date" id="memberBirthDate">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="memberDeathDate">去世日期</label>
+                        <input type="date" id="memberDeathDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="memberGeneration">世代</label>
+                        <input type="number" id="memberGeneration" min="1" value="1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="memberFather">父亲</label>
+                    <select id="memberFather">
+                        <option value="">无</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="memberMother">母亲</label>
+                    <select id="memberMother">
+                        <option value="">无</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="memberSpouse">配偶</label>
+                    <select id="memberSpouse">
+                        <option value="">无</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="memberDescription">备注</label>
+                    <textarea id="memberDescription" rows="3"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 成员详情弹窗 -->
+    <div id="detailModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="detailTitle">成员详情</h2>
+                <button class="modal-close" id="closeDetailModal">×</button>
+            </div>
+            <div id="detailContent" class="detail-content">
+                <!-- 详情内容将在这里动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="family-tree.js"></script>
+</body>
+</html>
+
